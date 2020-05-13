@@ -1,0 +1,28 @@
+{
+  "name": "lpweb20201-estagio-tcc",
+  "version": "0.0.0",
+  "description": "Software de gerenciamento e avaliação de propostas de Estágio e TCC",
+  "main": "index.js",
+  "scripts": {
+    "release": "standard-version && git push --follow-tags origin master",
+    "first-release": "standard-version --first-release"
+  },
+  "author": "Jackson Gomes",
+  "license": "ISC",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "husky": "^4.2.5",
+    "standard-version": "^8.0.0"
+  }
+}
