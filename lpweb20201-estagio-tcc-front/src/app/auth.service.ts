@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private API_URL = 'http://localhost:8000/api/';
-
   constructor(private http: HttpClient) {
   }
 
@@ -16,7 +15,7 @@ export class AuthService {
       username,
       password
     };
-    return this.http.post(this.API_URL.concat('token-auth/'), user)
+    return this.http.post(environment.API_URL.concat('token-auth/'), user)
       .pipe(
         map(data => this.updateData(data)),
         tap(user => {
@@ -27,7 +26,7 @@ export class AuthService {
 
   public refreshToken() {
     const user = this.user();
-    return this.http.post(this.API_URL.concat('token-refresh/'), { token: user.token })
+    return this.http.post(environment.API_URL.concat('token-refresh/'), { token: user.token })
       .pipe(
         map(data => this.updateData(data)),
         tap(user => {
