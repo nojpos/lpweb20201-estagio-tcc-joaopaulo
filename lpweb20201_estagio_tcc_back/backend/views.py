@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from .serializers import UserSerializer, GroupSerializer
+from rest_framework.response import Response
+
+from .serializers import *
+from .models import *
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -20,4 +23,32 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class PerfilLogadoViewSet(viewsets.ModelViewSet):
+    """
+    Endpoint que permite obter e cadastrar um perfil para o usuário logado
+    """
+    serializer_class = PerfilSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Perfil.objects.filter(usuario=self.request.user)
+
+    def list(self, request, *args, **kwargs):
+        perfil = self.get_queryset()
+        if perfil.exists():
+            serializer = self.get_serializer(perfil.first())
+            return Response(serializer.data)
+        else:
+            return Response(None, status=404)
+
+
+class PerfilViewSet(viewsets.ModelViewSet):
+    """
+    Endpoint que permite recuperar e editar informações sobre perfis de usuários
+    """
+    serializer_class = PerfilSerializer
+    queryset = Perfil.objects.all()
     permission_classes = [permissions.IsAuthenticated]
