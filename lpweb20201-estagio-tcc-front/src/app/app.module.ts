@@ -8,13 +8,21 @@ import localePtExtra from '@angular/common/locales/extra/pt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { LoginComponent } from './login/login.component';
+import { SobreComponent } from './sobre/sobre.component';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 
 registerLocaleData(localePt, 'pt', localePtExtra);
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PerfilComponent,
+    LoginComponent,
+    SobreComponent,
+    PaginaNaoEncontradaComponent
   ],
   imports: [
     BrowserModule,

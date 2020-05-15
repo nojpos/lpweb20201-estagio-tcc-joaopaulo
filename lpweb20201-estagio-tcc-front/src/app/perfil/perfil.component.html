@@ -1,0 +1,116 @@
+<div class="container" *ngIf="user">
+    <h1>Olá, seja bem-vindo(a)!</h1>
+
+    <div class="card-deck">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Você está logado!</h5>
+                <h6 class="card-subtitle mb-3">Suas informações de usuário:</h6>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="campo">id (chave)</div>
+                        <div class="valor">{{user.id}}</div>
+                    </div>
+                    <div class="col">
+                        <div class="campo">username</div>
+                        <div class="valor">{{user.username}}</div>
+                    </div>
+                    <div class="col">
+                        <div class="campo">e-mail</div>
+                        <div class="valor">{{user.email}}</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="campo">data e hora de expiração do token</div>
+                    <div class="valor">
+                        {{user.token_expires|date:'short'}}
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" (click)="logout()">
+                    <i class="fas fa-door-open"></i>
+                    Sair
+                </button>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="perfil">
+            <div class="card-body">
+                <h5 class="card-title">Você possui um perfil</h5>
+
+                <h6 class="card-subtitle mt-4">Informações do registro</h6>
+                <div class="row">
+                    <div class="col">
+                        <div class="campo">id (chave)</div>
+                        <div class="valor">{{perfil.id}}</div>
+                    </div>
+                    <div class="col">
+                        <div class="campo">data de cadastro</div>
+                        <div class="valor">{{perfil.cadastrado_em | date:'short'}}</div>
+                    </div>
+                    <div class="col">
+                        <div class="campo">data de atualização</div>
+                        <div class="valor">{{perfil.atualizado_em | date:'short'}}</div>
+                    </div>
+                </div>
+
+                <h6 class="card-subtitle mt-4">Informações pessoais e documentação</h6>
+                <div class="row mb-2">
+                    <div class="col">
+                        <div class="campo">nome</div>
+                        <div class="valor">{{perfil.nome}}</div>
+                    </div>
+                    <div class="col-2">
+                        <div class="campo">sexo</div>
+                        <div class="valor">{{perfil.sexo}}</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="campo">CPF</div>
+                    <div class="valor">{{perfil.cpf}}</div>
+                </div>
+
+                <h6 class="card-subtitle mt-4">Informações de contato</h6>
+                <div class="row">
+                    <div class="col">
+                        <div class="campo">e-mail (do usuário)</div>
+                        <div class="valor">{{user.email}}</div>
+                    </div>
+                    <div class="col">
+                        <div class="campo">telefone</div>
+                        <div class="valor">{{perfil.telefone}}</div>
+                    </div>
+                </div>
+
+                <h6 class="card-subtitle mt-4">Informações de correspondência</h6>
+                <div class="row mb-2">
+                    <div class="col">
+                        <div class="campo">endereço</div>
+                        <div class="valor">{{perfil.endereco}}</div>
+                    </div>
+                    <div class="col">
+                        <div class="campo">cidade / UF</div>
+                        <div class="valor">{{perfil.cidade}} / {{perfil.estado_uf}}</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="campo">CEP</div>
+                    <div class="valor">{{perfil.cep}}</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card text-white bg-warning" *ngIf="temPerfil === false">
+            <div class="card-header"><i class="fas fa-info-circle" aria-hidden="true"></i> Aviso</div>
+            <div class="card-body">
+                <h5 class="card-title">Você não possui um perfil</h5>
+                <p class="card-text">Você ainda não cadastrou um perfil. A funcionalidade de cadastro estará disponível
+                    em breve a partir desta tela.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
