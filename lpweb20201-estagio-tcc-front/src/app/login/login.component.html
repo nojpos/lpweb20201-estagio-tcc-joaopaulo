@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col">
+            <h1 class="display-4">Software de gerenciamento e avaliação de propostas de Estágio e TCC</h1>
+            <p>
+                <strong>
+                    Seja bem-vindo(a) ao software de gerenciamento e avaliação
+                    de propostas de Estágio e TCC.
+                </strong>
+            </p>
+            <p>Utilize o formulário ao lado para entrar no sistema
+                e ter acesso às funcionalidades disponibilizadas para seu
+                usuário.
+            </p>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Entrar no sistema</h3>
+                    <h6 class="card-subtitle mb-3 text-muted">Informe suas credenciais (nome de usuário e senha) para
+                        acessar o
+                        sistema</h6>
+                    <div class="alert alert-danger" *ngIf="error">
+                        <div *ngFor="let nfe of error.non_field_errors">{{nfe}}</div>
+                    </div>
+                    <form #formLogin="ngForm" (submit)="login()">
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-lg" placeholder="Nome de usuário"
+                                name="username" #textUsername="ngModel" required [(ngModel)]="username"
+                                [class.is-invalid]="textUsername.invalid && (textUsername.dirty || textUsername.touched)">
+                            <div *ngIf="textUsername.invalid && (textUsername.dirty || textUsername.touched)"
+                                class="invalid-feedback">
+                                <span *ngIf="textUsername.errors.required">Informe seu nome de usuário</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control form-control-lg" placeholder="Senha"
+                                name="password" #textPassword="ngModel" required [(ngModel)]="password"
+                                [class.is-invalid]="textPassword.invalid && (textPassword.dirty || textPassword.touched)">
+                            <div *ngIf="textPassword.invalid && (textPassword.dirty || textPassword.touched)"
+                                class="invalid-feedback">
+                                <span *ngIf="textPassword.errors.required">Informe a senha</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" [disabled]="formLogin.invalid">
+                                <i class="fas fa-key" aria-hidden="true"></i>
+                                Entrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
