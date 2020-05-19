@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/jacksongomesbr/lpweb20201-estagio-tcc/compare/v0.0.2...v0.0.3) (2020-05-19)
+
+
+### Refatoração
+
+* atualiza configuração do standard-version ([81bfb52](https://github.com/jacksongomesbr/lpweb20201-estagio-tcc/commit/81bfb521eb3e195333f2d0ec3f7f05e155c8536f))
+
+
+### Documentação
+
+* atualiza índice da documentação geral ([5f88dcc](https://github.com/jacksongomesbr/lpweb20201-estagio-tcc/commit/5f88dcce79acd56a2b3c42de43cbe2759e988b27))
+
 ### [0.0.2](https://github.com/jacksongomesbr/lpweb20201-estagio-tcc/compare/v0.0.1...v0.0.2) (2020-05-19)
 
 ### 0.0.1 (2020-05-15)
