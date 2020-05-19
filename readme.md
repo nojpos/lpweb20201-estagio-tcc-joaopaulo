@@ -8,3 +8,5 @@ O software é composto por duas partes principais:
 * **frontend**: um software baseado em Angular e Bootstrap
 
 Detalhes da estrutura e do funcionamento de cada um destes softwares podem ser obtidos nos arquivos `README.md` das suas respectivas pastas.
+
+A documentação está disponível a partir da pasta [docs](docs/readme.md).
