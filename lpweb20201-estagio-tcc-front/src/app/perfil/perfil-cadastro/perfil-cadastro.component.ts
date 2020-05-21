@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MASKS, NgBrazilValidators } from 'ng-brazil';
 import { EnderecoService } from 'src/app/endereco.service';
+import { ToastrService } from 'ngx-toastr';
+import { ConfiguracaoAlert } from 'src/app/uteis/configuracao-alert';
 
 @Component({
   selector: 'app-perfil-cadastro',
@@ -21,31 +23,31 @@ export class PerfilCadastroComponent implements OnInit {
   perfil: any;
   alterar: boolean = false;
 
-  constructor(public auth$: AuthService, 
-              private perfil$: PerfilService, 
-              private router: Router, 
-              private route: ActivatedRoute, 
+  constructor(public auth$: AuthService,
+              private perfil$: PerfilService,
+              private router: Router,
               private fb: FormBuilder,
-              private endereco$: EnderecoService) { }
+              private endereco$: EnderecoService,
+              private alert: ToastrService) { }
 
   ngOnInit(): void {
     this.criarFormulario();
 
     this.user = this.auth$.user();
     if (this.user) {
-      const id: number = this.route.snapshot.params.id;
-      this.alterar = id > 0;
-
-      if (this.alterar && id) {
-        this.perfil$.perfilPorId(id)
+      this.perfil$.perfilLogado()
           .subscribe(
             dados => {
+              this.router.navigate(['perfil/editar']);
               this.perfil = dados;
+              this.alterar = true;
               console.log(this.perfil);
               this.criarFormulario();
             },
-            erro => console.error(erro))
-      }
+            erro => {
+              console.error(erro);
+              this.router.navigate(['perfil/novo']);
+            });
     } else {
       this.router.navigate(['/login']);
     }
@@ -61,20 +63,22 @@ export class PerfilCadastroComponent implements OnInit {
     const cep = this.somenteNumeros(item)
     console.log(cep)
     if (cep.length !== 8) {
-      return ''
+      return '';
     }
 
     this.endereco$.obterEndereco(cep)
       .subscribe(
-        (data: any)=> {
+        (data: any) => {
+          if (data.erro) {return this.alert.warning('Endereço não encontrado', 'Atenção', { ... ConfiguracaoAlert.configuracaoPadrao });}
           this.cadastroForm.patchValue({
             estado_uf: data.uf,
             cidade: data.localidade,
             endereco: data.logradouro + ', ' + data.bairro
-          })
+          });
+          this.alert.info('Endereço encontrado com sucesso', 'Informação', { ... ConfiguracaoAlert.configuracaoPadrao });
         },
         erro => {
-          console.error(erro)
+          console.error(erro);
         }
       )
   }
@@ -83,15 +87,15 @@ export class PerfilCadastroComponent implements OnInit {
     this.cadastroForm = this.fb.group({
       id: [{ value: !this.alterar ? '' : this.perfil.id, disabled: true }],
       usuario: [!this.alterar ? 0 : this.perfil.usuario, []],
-      nome: [!this.alterar ? '' : this.perfil.nome, [Validators.required, Validators.maxLength(128)]],
+      nome: [!this.alterar ? null : this.perfil.nome, [Validators.required, Validators.maxLength(128)]],
       sexo: [!this.alterar ? 'F' : this.perfil.sexo, []],
-      cpf: [!this.alterar ? '' : this.perfil.cpf, [NgBrazilValidators.cpf]],
-      telefone: [!this.alterar ? '' : this.perfil.telefone, [NgBrazilValidators.telefone]],
-      endereco: [!this.alterar ? '' : this.perfil.endereco, [Validators.maxLength(512)]],
-      estado_uf: [!this.alterar ? '' : this.perfil.estado_uf, [Validators.maxLength(2)]],
-      cidade: [!this.alterar ? '' : this.perfil.cidade, [Validators.maxLength(64)]],
-      cep: [!this.alterar ? '' : this.perfil.cep, [NgBrazilValidators.cep]]
-    })
+      cpf: [!this.alterar ? null : this.perfil.cpf, [NgBrazilValidators.cpf]],
+      telefone: [!this.alterar ? null : this.perfil.telefone, [NgBrazilValidators.telefone]],
+      endereco: [!this.alterar ? null : this.perfil.endereco, [Validators.maxLength(512)]],
+      estado_uf: [!this.alterar ? null : this.perfil.estado_uf, [Validators.maxLength(2)]],
+      cidade: [!this.alterar ? null : this.perfil.cidade, [Validators.maxLength(64)]],
+      cep: [!this.alterar ? null : this.perfil.cep, [NgBrazilValidators.cep]]
+    });
   }
 
   onSubmit() {
@@ -114,21 +118,28 @@ export class PerfilCadastroComponent implements OnInit {
         dados => {
           console.log(dados)
           this.router.navigate(['/perfil']);
-        }
-      ),
-      erro => console.error(erro)
+          this.mensagemCadastro();
+        },
+        erro => console.error(erro)
+      )
   }
 
   atualizar() {
     this.AtualizarDadosObjeto()
-    console.log(this.perfil)
-    this.perfil$.atualizar(this.user.id, this.perfil)
+    this.perfil$.atualizar(this.perfil.id, this.perfil)
       .subscribe(
         dados => {
           console.log(dados)
           this.router.navigate(['/perfil']);
+          this.mensagemCadastro();
+        },
+        erro => {
+          this.alert.error(erro.error[Object.keys(erro.error)[0]], 'Erro', { ... ConfiguracaoAlert.configuracaoPadrao });
         }
-      ),
-      erro => console.error(erro)
+      );
+  }
+
+  mensagemCadastro() {
+    this.alert.success(`Perfil ${this.alterar ? 'atualizado' : 'cadastrado'} com sucesso.`, 'Sucesso', { ... ConfiguracaoAlert.configuracaoPadrao });
   }
 }

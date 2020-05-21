@@ -16,7 +16,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <label for="nome">Nome</label>
+                            <label for="nome">Nome<span class="text-danger">*</span></label>
                             <input type="text" nome="nome" name="nome" class="form-control" placeholder="Nome"
                                 formControlName="nome"
                                 [ngClass]="{'is-invalid': cadastroForm.get('nome').errors && (cadastroForm.get('nome').dirty || cadastroForm.get('nome').touched)}">
@@ -124,5 +124,3 @@
         </div>
     </div>
 </form>
-
-{{cadastroForm.value | json}}

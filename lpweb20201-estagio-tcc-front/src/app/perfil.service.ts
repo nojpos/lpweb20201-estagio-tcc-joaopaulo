@@ -26,4 +26,8 @@ export class PerfilService {
   atualizar(id: number, perfil: any) {
     return this.http.put(environment.API_URL.concat(`perfis/${id}/`), perfil, this.auth$.httpOptions());
   }
+
+  excluir(id: number) {
+    return this.http.delete(environment.API_URL.concat(`perfis/${id}/`), this.auth$.httpOptions())
+  }
 }

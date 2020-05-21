@@ -17,6 +17,9 @@ import { PerfilCadastroComponent } from './perfil/perfil-cadastro/perfil-cadastr
 import { NgBrazil } from 'ng-brazil' 
 import { TextMaskModule } from 'angular2-text-mask';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 registerLocaleData(localePt, 'pt', localePtExtra);
 
 
@@ -36,7 +39,9 @@ registerLocaleData(localePt, 'pt', localePtExtra);
     HttpClientModule,
     AppRoutingModule,
     TextMaskModule,
-    NgBrazil
+    NgBrazil,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {

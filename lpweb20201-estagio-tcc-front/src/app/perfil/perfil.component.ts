@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PerfilService } from '../perfil.service';
 import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
+import { ConfiguracaoAlert } from '../uteis/configuracao-alert';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-perfil',
@@ -14,7 +16,7 @@ export class PerfilComponent implements OnInit {
   perfil: any;
   temPerfil = null;
 
-  constructor(public auth$: AuthService, private perfil$: PerfilService, private router: Router) { }
+  constructor(public auth$: AuthService, private perfil$: PerfilService, private router: Router, private alert: ToastrService) { }
 
   ngOnInit(): void {
     this.user = this.auth$.user();
@@ -39,5 +41,16 @@ export class PerfilComponent implements OnInit {
   logout() {
     this.auth$.logout();
     this.router.navigate(['/']);
+  }
+
+  excluirPerfil() {
+    this.perfil$.excluir(this.perfil.id)
+      .subscribe(
+        dados => {
+          this.router.navigate(['/']);
+          this.alert.warning(`Perfil excluído.`, 'Atenção', { ... ConfiguracaoAlert.configuracaoPadrao });
+        },
+        errro => console.error(errro)
+      );
   }
 }

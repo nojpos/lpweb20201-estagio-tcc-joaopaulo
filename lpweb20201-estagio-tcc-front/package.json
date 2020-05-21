@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~9.1.1",
+    "@angular/animations": "^9.1.9",
     "@angular/common": "~9.1.1",
     "@angular/compiler": "~9.1.1",
     "@angular/core": "~9.1.1",
@@ -28,6 +28,7 @@
     "jquery": "^3.5.1",
     "js-brasil": "^2.1.0",
     "ng-brazil": "^2.0.10",
+    "ngx-toastr": "^12.0.1",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.4",
     "text-mask-addons": "^3.8.0",

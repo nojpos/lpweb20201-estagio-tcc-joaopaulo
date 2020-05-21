@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'perfil/novo', component: PerfilCadastroComponent },
-  { path: 'perfil/editar/:id', component: PerfilCadastroComponent },
+  { path: 'perfil/editar', component: PerfilCadastroComponent },
   { path: 'sobre', component: SobreComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PaginaNaoEncontradaComponent }
