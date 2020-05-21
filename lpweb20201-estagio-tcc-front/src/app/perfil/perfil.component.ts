@@ -21,8 +21,15 @@ export class PerfilComponent implements OnInit {
     if (this.user) {
       this.perfil$.perfilLogado()
         .subscribe(
-          dados => this.perfil = dados,
-          erro => this.temPerfil = false
+          dados => {
+            this.perfil = dados;
+          },
+          erro => {
+            this.temPerfil = false;
+            if (erro.status === 401) {
+              this.logout();
+            }
+          }
         );
     } else {
       this.router.navigate(['/login']);

@@ -1,0 +1,128 @@
+<form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <div [ngSwitch]="alterar">
+            <h1 *ngSwitchCase="true">Editar Perfil</h1>
+            <h1 *ngSwitchCase="false">Cadastrar Perfil</h1>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="id">Codigo</label>
+                            <input type="number" id="id" name="id" class="form-control" placeholder="0"
+                                formControlName="id">
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" nome="nome" name="nome" class="form-control" placeholder="Nome"
+                                formControlName="nome"
+                                [ngClass]="{'is-invalid': cadastroForm.get('nome').errors && (cadastroForm.get('nome').dirty || cadastroForm.get('nome').touched)}">
+                            <div class="invalid-feedback">
+                                <span *ngIf="cadastroForm.get('nome').errors?.required && (cadastroForm.get('nome').dirty || cadastroForm.get('nome').touched)">
+                                    Nome é obrigatório
+                                </span>
+                                <span *ngIf="cadastroForm.get('nome').errors?.maxlength && (cadastroForm.get('nome').dirty || cadastroForm.get('nome').touched)">
+                                    O tamanho máximo é 128 caracteres
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="cpf" class="col-form-label-sm">Sexo</label>
+                        <div class="form-group form-check-inline">
+                            <div class="custom-control custom-radio mr-3">
+                                <input id="Feminino" type="radio" class="custom-control-input" value="F" name="sexo"
+                                    formControlName="sexo" />
+                                <label class="custom-control-label" for="Feminino">Feminino</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input id="Masculino" type="radio" class="custom-control-input" value="M" name="sexo"
+                                    formControlName="sexo" />
+                                <label class="custom-control-label" for="Masculino">Masculino</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="nome">CPF</label>
+                            <input type="text" nome="cpf" name="cpf" class="form-control" placeholder="CPF"
+                                formControlName="cpf"
+                                [ngClass]="{'is-invalid': cadastroForm.get('cpf').errors && (cadastroForm.get('cpf').dirty || cadastroForm.get('cpf').touched)}"
+                                cpf [textMask]="{mask: MASKS.cpf.textMask}">
+                            <span class="invalid-feedback"
+                                *ngIf="cadastroForm.get('cpf').errors && (cadastroForm.get('cpf').dirty || cadastroForm.get('cpf').touched)">
+                                CPF em formato inválido
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="text" nome="telefone" name="telefone" class="form-control"
+                                placeholder="Telefone" formControlName="telefone"
+                                [ngClass]="{'is-invalid': cadastroForm.get('telefone').errors && (cadastroForm.get('telefone').dirty || cadastroForm.get('telefone').touched)}"
+                                telefone #telefone [textMask]="{mask: MASKS.telefone.textMaskFunction}">
+                            <span class="invalid-feedback"
+                                *ngIf="cadastroForm.get('telefone').errors && (cadastroForm.get('telefone').dirty || cadastroForm.get('telefone').touched)">
+                                Telefone em formato inválido
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="cep">CEP</label>
+                            <input type="text" nome="cep" name="cep" class="form-control" placeholder="CEP"
+                                formControlName="cep"
+                                [ngClass]="{'is-invalid': cadastroForm.get('cep').errors && (cadastroForm.get('cep').dirty || cadastroForm.get('cep').touched)}"
+                                cep [textMask]="{mask: MASKS.cep.textMask}" (keyup)="obterEndereco(cadastroForm.get('cep').value)">
+                            <span class="invalid-feedback"
+                                *ngIf="cadastroForm.get('cep').errors && (cadastroForm.get('cep').dirty || cadastroForm.get('cep').touched)">
+                                CEP em formato inválido
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="estado_uf">UF</label>
+                            <input type="text" nome="estado_uf" name="estado_uf" class="form-control" placeholder="UF"
+                                formControlName="estado_uf"
+                                [ngClass]="{'is-invalid': cadastroForm.get('estado_uf').errors && (cadastroForm.get('estado_uf').dirty || cadastroForm.get('estado_uf').touched)}">
+                            <span class="invalid-feedback"
+                                *ngIf="cadastroForm.get('estado_uf').errors && (cadastroForm.get('estado_uf').dirty || cadastroForm.get('estado_uf').touched)">
+                                Nome é obrigatório
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" nome="cidade" name="cidade" class="form-control" placeholder="Cidade"
+                                formControlName="cidade">
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label for="endereco">Endereço</label>
+                            <textarea id="endereco" name="endereco" class="form-control" rows="1"
+                                formControlName="endereco"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success float-right" [disabled]="!cadastroForm.valid"><i class="fas fa-check"></i> Salvar</button>
+                <a class="btn btn-secondary float-right mr-3" [routerLink]="['/perfil']"><i class="fas fa-angle-left"></i> Voltar</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+{{cadastroForm.value | json}}

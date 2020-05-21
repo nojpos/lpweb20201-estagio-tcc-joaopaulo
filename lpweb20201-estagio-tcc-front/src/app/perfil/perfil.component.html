@@ -101,6 +101,12 @@
                 </div>
 
             </div>
+            <div class="card-footer">
+                <a class="btn btn-primary" [routerLink]="['editar/', perfil.id]">
+                    <i class="fas fa-pen"></i>
+                    Editar
+                </a>
+            </div>
         </div>
 
         <div class="card text-white bg-warning" *ngIf="temPerfil === false">
@@ -109,6 +115,10 @@
                 <h5 class="card-title">Você não possui um perfil</h5>
                 <p class="card-text">Você ainda não cadastrou um perfil. A funcionalidade de cadastro estará disponível
                     em breve a partir desta tela.</p>
+                <a class="btn btn-primary" [routerLink]="'novo'">
+                    <i class="fas fa-plus"></i>
+                    Novo
+                </a>
             </div>
         </div>
 
