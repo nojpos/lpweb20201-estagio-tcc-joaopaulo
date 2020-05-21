@@ -15,10 +15,6 @@ export class PerfilService {
     return this.http.get(environment.API_URL.concat('perfil-logado/'), this.auth$.httpOptions());
   }
 
-  perfilPorId(id: number) {
-    return this.http.get(environment.API_URL.concat(`perfis/${id}/`), this.auth$.httpOptions());
-  }
-
   adicionar(perfil: any) {
     return this.http.post(environment.API_URL.concat(`perfis/`), perfil, this.auth$.httpOptions());
   }

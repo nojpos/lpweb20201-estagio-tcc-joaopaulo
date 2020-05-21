@@ -70,12 +70,14 @@ export class PerfilCadastroComponent implements OnInit {
       .subscribe(
         (data: any) => {
           if (data.erro) {return this.alert.warning('Endereço não encontrado', 'Atenção', { ... ConfiguracaoAlert.configuracaoPadrao });}
+          
           this.cadastroForm.patchValue({
             estado_uf: data.uf,
             cidade: data.localidade,
             endereco: data.logradouro + ', ' + data.bairro
           });
           this.alert.info('Endereço encontrado com sucesso', 'Informação', { ... ConfiguracaoAlert.configuracaoPadrao });
+          (document.querySelector('[name="endereco"]') as HTMLElement).focus();
         },
         erro => {
           console.error(erro);
